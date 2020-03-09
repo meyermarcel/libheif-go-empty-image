@@ -50,12 +50,32 @@ brew install automake make pkg-config x265 libde265 libjpeg libheif
 
 ## Create empty image
 
-Create images with pixel width from 471 to 480.
+Create images with pixel width from 446 to 486.
 
 ```
-rm -f *.heif && go run main.go 466 480 && ls -hl *.heif | awk '{print $5, $9}'
+rm -f *.heif && go run main.go 446 486 && ls -hl *.heif | awk '{print $5, $9}'
 
 Output:
+50K sample-width446.heif
+51K sample-width447.heif
+911B sample-width448.heif
+51K sample-width449.heif
+51K sample-width450.heif
+52K sample-width451.heif
+971B sample-width452.heif
+52K sample-width453.heif
+52K sample-width454.heif
+52K sample-width455.heif
+971B sample-width456.heif
+52K sample-width457.heif
+53K sample-width458.heif
+53K sample-width459.heif
+943B sample-width460.heif
+53K sample-width461.heif
+53K sample-width462.heif
+53K sample-width463.heif
+943B sample-width464.heif
+52K sample-width465.heif
 53K sample-width466.heif
 54K sample-width467.heif
 999B sample-width468.heif
@@ -71,4 +91,10 @@ Output:
 54K sample-width478.heif
 55K sample-width479.heif
 935B sample-width480.heif
+54K sample-width481.heif
+54K sample-width482.heif
+54K sample-width483.heif
+54K sample-width484.heif
+54K sample-width485.heif
+55K sample-width486.heif
 ```
