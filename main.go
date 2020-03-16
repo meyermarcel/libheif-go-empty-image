@@ -14,13 +14,10 @@ import (
 func main() {
 
 	file, err := os.Open("sample.png")
-	if err != nil {
-		checkErr(err)
-	}
+	checkErr(err)
+
 	img, err := png.Decode(file)
-	if err != nil {
-		checkErr(err)
-	}
+	checkErr(err)
 
 	widthStart, err := strconv.ParseInt(os.Args[1], 10, 0)
 	checkErr(err)
@@ -37,10 +34,12 @@ func main() {
 
 func convertPNGtoHEIF(img image.Image, width int) error {
 
-	resizedCroppedImg := imaging.Fill(img, width, 360, imaging.Center, imaging.Lanczos)
-	fmt.Println(resizedCroppedImg.Bounds())
+	resizedImg := imaging.Resize(img, width, 360, imaging.Lanczos)
+	fmt.Println()
+	fmt.Printf("#####  Width: %dpx\n", resizedImg.Bounds().Size().X)
+	fmt.Println()
 
-	ctx, err := heif.EncodeFromImage(resizedCroppedImg, heif.CompressionHEVC, 75, heif.LosslessModeDisabled, heif.LoggingLevelFull)
+	ctx, err := heif.EncodeFromImage(resizedImg, heif.CompressionHEVC, 75, heif.LosslessModeDisabled, heif.LoggingLevelFull)
 	if err != nil {
 		return err
 	}

@@ -10,11 +10,11 @@ go version go1.14 darwin/amd64
 
 ## What happens if the steps below are executed?
 
-1. `sample.png` image file is read once
+1. `sample.png` image (480x360px) file is read once
 
-1. pure Go library [disintegration/imaging](https://github.com/disintegration/imaging) transforms image by resizing and cropping to different widths 
+1. pure Go library [disintegration/imaging](https://github.com/disintegration/imaging) resizes image to different widths maintaining height
 
-1. libheif Go API encodes image to heif
+1. libheif Go API encodes image to to lossy heif with 75% quality
 
 1. libheif Go API writes encoded image to file `sample-width<width>.heif`
 
@@ -57,27 +57,27 @@ rm -f *.heif && go run main.go 446 486 && ls -hl *.heif | awk '{print $5, $9}'
 
 Output:
 50K sample-width446.heif
-51K sample-width447.heif
+50K sample-width447.heif
 911B sample-width448.heif
-51K sample-width449.heif
+50K sample-width449.heif
 51K sample-width450.heif
-52K sample-width451.heif
+51K sample-width451.heif
 971B sample-width452.heif
 52K sample-width453.heif
 52K sample-width454.heif
-52K sample-width455.heif
+51K sample-width455.heif
 971B sample-width456.heif
 52K sample-width457.heif
-53K sample-width458.heif
-53K sample-width459.heif
+52K sample-width458.heif
+52K sample-width459.heif
 943B sample-width460.heif
-53K sample-width461.heif
+52K sample-width461.heif
 53K sample-width462.heif
-53K sample-width463.heif
+52K sample-width463.heif
 943B sample-width464.heif
-52K sample-width465.heif
-53K sample-width466.heif
-54K sample-width467.heif
+53K sample-width465.heif
+54K sample-width466.heif
+53K sample-width467.heif
 999B sample-width468.heif
 54K sample-width469.heif
 54K sample-width470.heif
@@ -85,16 +85,16 @@ Output:
 999B sample-width472.heif
 54K sample-width473.heif
 55K sample-width474.heif
-55K sample-width475.heif
+54K sample-width475.heif
 935B sample-width476.heif
 54K sample-width477.heif
 54K sample-width478.heif
-55K sample-width479.heif
-935B sample-width480.heif
+54K sample-width479.heif
+935B sample-width480.heif # original width of sample.png
 54K sample-width481.heif
-54K sample-width482.heif
-54K sample-width483.heif
-54K sample-width484.heif
-54K sample-width485.heif
+55K sample-width482.heif
+55K sample-width483.heif
+989B sample-width484.heif
+55K sample-width485.heif
 55K sample-width486.heif
 ```
