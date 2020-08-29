@@ -24,6 +24,8 @@ func main() {
 		checkErr(err)
 		img, err := png.Decode(file)
 		checkErr(err)
+		err = file.Close()
+		checkErr(err)
 		err = convertPNGtoHEIF(img, width)
 		checkErr(err)
 	}
@@ -38,10 +40,11 @@ func convertPNGtoHEIF(img image.Image, width int) error {
 	fmt.Println()
 
 	b := img.Bounds()
-	imgNRGBA := image.NewNRGBA(image.Rect(0, 0, b.Dx(), b.Dy()))
-	draw.Draw(imgNRGBA, imgNRGBA.Bounds(), img, b.Min, draw.Src)
 
-	ctx, err := heif.EncodeFromImage(imgNRGBA, heif.CompressionHEVC, 75, heif.LosslessModeDisabled, heif.LoggingLevelFull)
+	imgRGBA := image.NewRGBA(image.Rect(0, 0, b.Dx(), b.Dy()))
+	draw.Draw(imgRGBA, imgRGBA.Bounds(), img, b.Min, draw.Src)
+
+	ctx, err := heif.EncodeFromImage(imgRGBA, heif.CompressionHEVC, 75, heif.LosslessModeDisabled, heif.LoggingLevelFull)
 	if err != nil {
 		return err
 	}

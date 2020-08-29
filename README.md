@@ -1,6 +1,8 @@
-# libheif golang API empty image
+# ~~libheif golang API produces empty image~~ fixed
 
-I read different image files from disk. After the conversion to the .heif format by the amazing C library [libheif](https://github.com/strukturag/libheif) some of them were empty.
+~~I read different image files from disk. After the conversion to HEIF by the amazing C library [libheif](https://github.com/strukturag/libheif) some of them were empty.~~
+
+Version 1.8.0 of [libheif](https://github.com/strukturag/libheif) fixes this issue.
 
 To reproduce this behaviour this project was created.
 
@@ -17,8 +19,8 @@ Should work but it is not confirmed.
 Tested on macOS:
 
 ```
-System Version: macOS 10.15.5 (19F101)
-go version go1.14.4 darwin/amd64
+System Version: macOS 10.15.6 (19G2021)
+go version go1.15.0 darwin/amd64
 ```
 
 ## What happens if the steps below are executed?
@@ -43,46 +45,21 @@ go version go1.14.4 darwin/amd64
 
 Read and convert sample images with pixel width from 446 to 486.
 
-Disabling and enabling the Golang Garbage Collector produces different results.
-
-### With Garbage Collector on 
-
 ```
 rm -f *.heif  &&  go run main.go 464 476  &&  ls -hl *.heif  |  awk '{print $5, $9}'
 
 Output:
-943B sample-width464.heif # emtpty image
-53K sample-width465.heif
+53K sample-width464.heif
+54K sample-width465.heif
 54K sample-width466.heif
-53K sample-width467.heif
-999B sample-width468.heif # emtpty image
+54K sample-width467.heif
+54K sample-width468.heif
 54K sample-width469.heif
 54K sample-width470.heif
 54K sample-width471.heif
-999B sample-width472.heif # emtpty image
-54K sample-width473.heif
+54K sample-width472.heif
+55K sample-width473.heif
 55K sample-width474.heif
-54K sample-width475.heif
-55K sample-width476.heif
-```
-
-### With Garbage Collector off (`GOGC=off`)
-
-```
-rm -f *.heif  &&  GOGC=off go run main.go 464 476  &&  ls -hl *.heif  |  awk '{print $5, $9}'
-
-Output:
-943B sample-width464.heif # emtpty image
-53K sample-width465.heif
-54K sample-width466.heif
-53K sample-width467.heif
-999B sample-width468.heif # emtpty image
-54K sample-width469.heif
-54K sample-width470.heif
-54K sample-width471.heif
-999B sample-width472.heif # emtpty image
-54K sample-width473.heif
-55K sample-width474.heif
-54K sample-width475.heif
-935B sample-width476.heif # emtpty image
+55K sample-width475.heif
+54K sample-width476.heif
 ```
